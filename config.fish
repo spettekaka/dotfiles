@@ -31,6 +31,3 @@ if status --is-interactive
 end
 
 starship init fish | source
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/markusa/repos/google-cloud-sdk/path.fish.inc' ]; . '/Users/markusa/repos/google-cloud-sdk/path.fish.inc'; end
