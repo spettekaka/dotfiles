@@ -204,9 +204,6 @@ require('nvim-treesitter.configs').setup {
   },
 }
 
--- LSP settings
-local nvim_lsp = require 'lspconfig'
-
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
@@ -254,13 +251,14 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 -- Enable the following language servers
 local servers = { 'clangd', 'rust_analyzer', 'pyright' }
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
+  vim.lsp.enable(lsp)
+  vim.lsp.config(lsp, {
     on_attach = on_attach,
     capabilities = capabilities,
     opts = {
         autoformat = true,
     },
-  }
+  })
 end
 
 -- Make runtime files discoverable to the server
