@@ -19,9 +19,7 @@ require('packer').startup(function()
   use 'tpope/vim-rhubarb' -- Fugitive-companion to interact with github
   use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
   --use 'ludovicchabant/vim-gutentags' -- Automatic tags management
-  -- UI to select things (files, grep results, open buffers...)
-  use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
-  use 'joshdick/onedark.vim' -- Theme inspired by Atom
+  use 'ibhagwan/fzf-lua'
   use 'itchyny/lightline.vim' -- Fancier statusline
   -- Add indentation guide even on blank lines
   use 'lukas-reineke/indent-blankline.nvim'
@@ -129,27 +127,11 @@ vim.g.indent_blankline_show_trailing_blankline_indent = false
 -- Gitsigns
 require('gitsigns').setup()
 
--- Telescope
---require('telescope').setup {
---  default = {
---    mappings = {
---      i = {
---        ['<C-u>'] = false,
---        ['<C-d>'] = false,
---      },
---    },
---  },
---}
---Add leader shortcuts
-vim.api.nvim_set_keymap('n', '<leader>b', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-p>', [[<cmd>lua require('telescope.builtin').find_files({previewer = false})<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sb', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sh', [[<cmd>lua require('telescope.builtin').help_tags()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>st', [[<cmd>lua require('telescope.builtin').tags()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sd', [[<cmd>lua require('telescope.builtin').grep_string()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>r', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], { noremap = true, silent = true })
+-- fzf-lua key binds
+require('fzf-lua')
+vim.keymap.set('n', '<C-p>', FzfLua.files)
+vim.keymap.set('n', '<leader>r', FzfLua.live_grep)
+vim.keymap.set('n', '<leader>g', FzfLua.git_files)
 
 -- Treesitter configuration
 -- Parsers must be installed manually via :TSInstall
