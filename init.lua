@@ -20,7 +20,9 @@ require('packer').startup(function()
   use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
   --use 'ludovicchabant/vim-gutentags' -- Automatic tags management
   use 'ibhagwan/fzf-lua'
-  use 'itchyny/lightline.vim' -- Fancier statusline
+  use { 'nvim-lualine/lualine.nvim',
+    requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+  }
   -- Add indentation guide even on blank lines
   use 'lukas-reineke/indent-blankline.nvim'
   -- Add git related info in the signs columns and popups
@@ -91,11 +93,13 @@ vim.wo.signcolumn = 'yes'
 vim.cmd [[colorscheme gruvbox-material]]
 
 --Set statusbar
-vim.g.lightline = {
-  colorscheme = 'gruvbox_material',
-  active = { left = { { 'mode', 'paste' }, { 'gitbranch', 'readonly', 'filename', 'modified' } } },
-  component_function = { gitbranch = 'fugitive#head' },
+require('lualine').setup {
+    options = { 
+        theme = 'auto',
+        icons_enabled = false,
+    }
 }
+require('lualine').setup()
 
 --Remap space as leader key
 vim.keymap.set('', '<Space>', '<Nop>', { noremap = true, silent = true })
